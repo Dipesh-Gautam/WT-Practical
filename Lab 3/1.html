@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Todo List</title>
+
+  <style type="text/css">
+    div
+    {
+      font-size: 60px;
+      font-weight: bold;
+      text-align: center;
+    }
+
+    ul
+    {
+      float: left;
+      font-weight: bold;
+      font-size: 34px;
+      margin-right: 50px;
+    }
+
+    li
+    {
+      font-weight: normal;
+      font-size: 24px;
+    }
+    input
+    {
+      width: 20%;
+      height: 10px;
+      border: 1px solid black;
+      border-radius: 1px;
+      margin-top: 40px;
+    }
+    button
+    {
+      border: none;
+      background-color: red;
+      padding: 3px 5px;
+      text-align: center;
+      font-size: 15px;
+      margin: 1px 0px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+
+<body>
+
+<div>Todo List<br /></div>
+
+<ul id="result">My Lists : </ul>
+
+
+<script type="text/javascript">
+  function DisplayLists()
+  {
+    var Lists = [];
+    for (var i = 0; i < localStorage.length; i++)
+    {
+      // Retrive data
+      Lists[i] = localStorage.getItem(localStorage.key(i));
+
+      // Create a <li> node
+      var node = document.createElement("LI");
+      
+      // Create a text node
+      var textnode = document.createTextNode(localStorage.getItem(localStorage.key(i)));
+
+      // Append the text to <li>
+      node.appendChild(textnode);
+      
+      // Append <li> to <ul> with id="result"
+      document.getElementById("result").appendChild(node);
+
+
+    }
+  }
+
+  DisplayLists();
+
+</script>
+  <form>
+    <input type="text" name="NewTask" placeholder=' Enter new Task here and click "Add Task" button' value="" id="NewTask"> <br />
+
+    <button type="submit" id="addTask">Add Task</button>
+  </form>
+
+<script type="text/javascript">
+  
+  function AddNewTask()
+  {
+
+    var NewTask = document.getElementById('NewTask').value;
+
+// This section is to avoid duplicate and null inputs##################################################################################
+    var InputLength = document.getElementById('NewTask').value.length;    
+    var Lists = [], count = 0;
+    for (var i = 0; i < localStorage.length; i++)
+    {
+      Lists[i] = localStorage.getItem(localStorage.key(i));
+      
+      if (NewTask.toLowerCase() == Lists[i].toLowerCase())
+        count++;
+    }
+    if (InputLength == 0)
+    {
+      console.log('Input is empty!');
+    }
+    else if (count > 0)
+    {
+      console.log("This task already exists!<br>");
+    }
+    else
+    {
+      localStorage.setItem(localStorage.length + 1, NewTask);
+      console.log("Task Added");
+    }
+// This section is to avoid duplicate and null inputs##################################################################################
+
+  }
+  
+  var addTask = document.getElementById('addTask');
+  addTask.addEventListener('click', AddNewTask, false);
+
+</script>
+
+</body>
+
+</html>
+
+
